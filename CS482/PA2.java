@@ -1,14 +1,15 @@
 //Avery Higgins, Sam Martins
 
+public class PA2 {
+
+public static void main(String [] args) {
 
 
-public static void main(Stirng [] args) {
+    byte[] inKey = new byte[16];
 
-
-    byte[16] inKey;
-
-    String cipherText = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
+    String cipherTextString = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
     
+    byte[] cipherText = cipherTextString.getBytes();
 
     int numOfCiphertextBlocks = cipherText.length / 16 - 1; // Each AES block has 16 bytes and we need to exclude the IV
 	byte[] cleartextBlocks = new byte[numOfCiphertextBlocks * 16];
@@ -20,7 +21,11 @@ public static void main(Stirng [] args) {
     
     boolean legit = false;
 
+    int value = 0;
+
     if(!legit){
+
+        
 
         for (int i=0; i < numOfCiphertextBlocks; i++) {
             for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
@@ -41,4 +46,5 @@ public static void main(Stirng [] args) {
     }
 
 
+}
 }
