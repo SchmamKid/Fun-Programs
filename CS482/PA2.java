@@ -1,8 +1,11 @@
+import java.nio.ByteBuffer;
+import java.security.InvalidKeyException;
+
 //Avery Higgins, Sam Martins
 
 public class PA2 {
 
-public static void main(String [] args) {
+public static void main(String [] args) throws InvalidKeyException{
 
 
     byte[] inKey = new byte[16];
@@ -21,11 +24,15 @@ public static void main(String [] args) {
     
     boolean legit = false;
 
-    int value = 0;
+    int value = 0x0000000000000;
 
-    if(!legit){
+    int max = 0xFFFFFFFF;
 
-        
+    if(value < max){
+
+        inKey = ByteBuffer.allocate(16).putInt(value).array();
+
+        Object decryptRoundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
 
         for (int i=0; i < numOfCiphertextBlocks; i++) {
             for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
@@ -35,13 +42,16 @@ public static void main(String [] args) {
             for (int j=0; j < 16; j++){
 
                 cleartextBlocks[i*16+j] =  (byte) (thisDecryptedBlock[j] ^ cipherText[i*16 + j]);
-                if(clearTextBlocks[i*16+j] < lowerBound || clearTextBlocks[i*16+j] > upperBound)
+                if(cleartextBlocks[i*16+j] < lowerBound || cleartextBlocks[i*16+j] > upperBound)
                     i = numOfCiphertextBlocks + 1;
+                    value += 1;
             }
+
 
         }
 
-        legit = true;
+        value += 1; 
+        //egit = true;
 
     }
 
