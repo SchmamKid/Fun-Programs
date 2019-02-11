@@ -45,6 +45,9 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     int max = 0xFFFFFFFF;
     max = Integer.parseInt(args[1]);
+
+    long start = System.currentTimeMillis();
+
     while((value & 0xfffffff) < (max & 0xfffffff)){
 
         //System.out.printf("%x\n", value);
@@ -91,11 +94,19 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
             
         }
 
+        
         value += 1; 
         //egit = true;
 
     }
 
+    long finish = System.currentTimeMillis();
+    long tdelta = finish - start;
+
+    double elapsed = tdelta / 100.0;
+
+    printWriter.println(elapsed);
+    printWriter.close();
 
 }
 }
