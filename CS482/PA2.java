@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.math.BigInteger;
 
 //Avery Higgins, Sam Martins
 
@@ -27,7 +28,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
 
     String cipherTextString = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
-    
+
     byte[] cipherText = cipherTextString.getBytes();
 
     int numOfCiphertextBlocks = cipherText.length / 16 - 1; // Each AES block has 16 bytes and we need to exclude the IV
@@ -37,14 +38,14 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
     int upperBound = 127;
 
     byte[] currentDecryptionBlock = new byte[16];
-    
+
     boolean legit = false;
 
-    int value = 0x0000000000000;
-    value = Integer.parseInt(args[0]);
+    long value = 0x0000000000000;
+    BigInteger value = new BigInteger(args[0], 16);
 
-    int max = 0xFFFFFFFF;
-    max = Integer.parseInt(args[1]);
+    long max = 0xFFFFFFFF;
+    BigInteger max = new BigInteger(args[1],16);
 
     long start = System.currentTimeMillis();
 
@@ -75,7 +76,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
             for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
 
             byte[] thisDecryptedBlock = Rijndael_Algorithm.blockDecrypt2 (currentDecryptionBlock, 0, decryptRoundKeys);
-        
+
             for (int j=0; j < 16; j++){
                 //System.out.println(i*16 + j);
 
@@ -91,11 +92,11 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
                 }
             }
 
-            
+
         }
 
-        
-        value += 1; 
+
+        value += 1;
         //egit = true;
 
     }
