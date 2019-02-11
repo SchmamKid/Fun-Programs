@@ -1,11 +1,14 @@
 import java.nio.ByteBuffer;
 import java.security.InvalidKeyException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 //Avery Higgins, Sam Martins
 
 public class PA2 {
 
-public static void main(String [] args) throws InvalidKeyException{
+public static void main(String [] args) throws InvalidKeyException, FileNotFoundException{
 
 
 
@@ -15,7 +18,11 @@ public static void main(String [] args) throws InvalidKeyException{
 
     byte[] inKey = new byte[16];
 
-    
+    inKey[15] = (byte) 0x03;
+    for(int i = 14; i > 4; i--){
+        inKey[i] = (byte) 0x00;
+    }
+
 
     String cipherTextString = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
     
@@ -37,9 +44,13 @@ public static void main(String [] args) throws InvalidKeyException{
 
     while((value & 0xfffffff) < (max & 0xfffffff)){
 
-        System.out.printf("%x\n", value);
+        //System.out.printf("%x\n", value);
 
-        inKey = ByteBuffer.allocate(16).putInt(value).array();
+        byte [] hexnums = ByteBuffer.allocate(4).putInt(value).array();
+
+        for(int x = 0; x < 4; x++){
+            inKey[x] = hexnums[x];
+        }
 
         Object decryptRoundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
 
