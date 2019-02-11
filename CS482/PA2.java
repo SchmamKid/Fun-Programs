@@ -12,6 +12,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
 
 
+
     File savedText = new File("savedText.txt");
 
     PrintWriter printWriter = new PrintWriter(savedText);
@@ -39,9 +40,10 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
     boolean legit = false;
 
     int value = 0x0000000000000;
+    value = Integer.parseInt(args[0]);
 
     int max = 0xFFFFFFFF;
-
+    max = Integer.parseInt(args[1]);
     while((value & 0xfffffff) < (max & 0xfffffff)){
 
         //System.out.printf("%x\n", value);
