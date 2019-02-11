@@ -47,9 +47,12 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
     //long max = 0xFFFFFFFF;
     BigInteger max = new BigInteger(args[1],16);
 
+    BigInteger one = new BigInteger("1");
+
     long start = System.currentTimeMillis();
 
-    while((value & 0xfffffff) < (max & 0xfffffff)){
+  //  while((value & 0xfffffff) < (max & 0xfffffff))
+    while(value.compareTo(max) < 0){
 
         //System.out.printf("%x\n", value);
 
@@ -96,7 +99,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         }
 
 
-        value += 1;
+        value.add(one);
         //egit = true;
 
     }
