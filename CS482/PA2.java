@@ -60,11 +60,11 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 		//for (byte k : inKey) System.out.print (String.format("%02X", k & 0xff));
 		//System.out.println (System.getProperty ("line.separator"));
         //System.out.println(Arrays.toString(inKey));
-        byte [4] hexnums = value.toByteArray();
+        byte [] hexnums = value.toByteArray();
         //byte [] hexnums = ByteBuffer.allocate(4).putInt(value).array();
 
-        for(int x = 0; x < 4; x++){
-            inKey[x] = hexnums[x];
+        for(int x = 0; x < hexnums.length; x++){
+            inKey[4 - x] = hexnums[x];
             //inKey[x] = (byte) inKey[x];
         }
 
