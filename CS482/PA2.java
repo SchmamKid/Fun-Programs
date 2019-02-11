@@ -3,6 +3,7 @@ import java.security.InvalidKeyException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 //Avery Higgins, Sam Martins
 
@@ -48,10 +49,16 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
         //System.out.printf("%x\n", value);
 
+        //System.out.println ("As a string: " + new String (inKey));
+		//for (byte k : inKey) System.out.print (String.format("%02X", k & 0xff));
+		//System.out.println (System.getProperty ("line.separator"));
+        //System.out.println(Arrays.toString(inKey));
+
         byte [] hexnums = ByteBuffer.allocate(4).putInt(value).array();
 
         for(int x = 0; x < 4; x++){
             inKey[x] = hexnums[x];
+            //inKey[x] = (byte) inKey[x];
         }
 
         Object decryptRoundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
