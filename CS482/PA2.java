@@ -34,7 +34,12 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     String cipherTextString = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
 
-    byte[] cipherText = cipherTextString.getBytes();
+    byte [] cipherText = new byte[cipherTextString.length() / 2];
+    for(int i = 0; i < cipherText.length; i++){
+        cipherText[i] = (byte) Integer.parseInt(cipherTextString.substring(i*2, i *2 + 2));
+
+    }
+    //byte[] cipherText = cipherTextString.getBytes();
   //  System.out.println(AESExample.convertToString(cipherText));
 
 
