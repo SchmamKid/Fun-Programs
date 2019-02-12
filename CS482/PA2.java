@@ -72,6 +72,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
         for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
             if(i > 1){
+                System.out.println("Succes!!");
                 printWriter.println("Key: " + inKey);
                 printWriter.println(new String (cleartextBlocks));
             }
@@ -84,7 +85,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
                 //System.out.println(i*16 + j);
 
                 cleartextBlocks[i*16+j] =  (byte) (thisDecryptedBlock[j] ^ cipherText[i*16 + j]);
-                if(cleartextBlocks[i*16+j] < lowerBound || cleartextBlocks[i*16+j] > upperBound){
+                if((cleartextBlocks[i*16+j] & 0xff) < lowerBound || (cleartextBlocks[i*16+j] & 0xff) > upperBound){
                     i = numOfCiphertextBlocks + 1;
                     //value += 1;
                     j = 17;
