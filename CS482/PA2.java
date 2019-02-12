@@ -33,14 +33,15 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
     byte[] cipherText = cipherTextString.getBytes();
 
     int numOfCiphertextBlocks = cipherText.length / 16 - 1; // Each AES block has 16 bytes and we need to exclude the IV
-	byte[] cleartextBlocks = new byte[numOfCiphertextBlocks * 16];
+	  byte[] cleartextBlocks = new byte[numOfCiphertextBlocks * 16];
+
+    byte[] receivedIV = new byte[16];
+    for (int i = 0; i < 16; i++) receivedIV[i] = cipherText[i];
 
     int lowerBound = 32;
     int upperBound = 127;
 
     byte[] currentDecryptionBlock = new byte[16];
-
-    boolean legit = false;
 
     //long value = 0x0000000000000;
     BigInteger value = new BigInteger(args[0], 16);
@@ -73,7 +74,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
         Object decryptRoundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
 
-        for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
+        for (int i=0; i < numOfCiphertextBlocks; i++) {
             if(i > 1){
                 System.out.println("Succes!!");
                 printWriter.append("\nKey: " + inKey);
@@ -93,10 +94,10 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
                     //value += 1;
                     j = 17;
                 }
-                else {
+              //  else {
                     //System.out.print(cleartextBlocks[i*16+j]);
 
-                }
+              //  }
             }
 
 
@@ -107,7 +108,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         inKey[4] = (byte) 0xe0;
         decryptRoundKeys  = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
 
-        for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
+        for (int i=0; i < numOfCiphertextBlocks; i++) {
             if(i > 1){
                 System.out.println("Succes!!");
                 printWriter.append("\nKey: " + inKey);
@@ -127,10 +128,10 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
                     //value += 1;
                     j = 17;
                 }
-                else {
+            //    else {
                     //System.out.print(cleartextBlocks[i*16+j]);
 
-                }
+              //  }
             }
 
 
