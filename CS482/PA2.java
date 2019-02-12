@@ -65,7 +65,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         //byte [] hexnums = ByteBuffer.allocate(4).putInt(value).array();
         int index = 3;
         for(int x = hexnums.length; x > 0; x--){
-            inKey[index] = hexnums[x];
+            inKey[index] = hexnums[x - 1];
             index--;
             //inKey[x] = (byte) inKey[x];
         }
