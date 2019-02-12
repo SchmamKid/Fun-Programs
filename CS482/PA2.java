@@ -99,7 +99,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         }
 
 
-        value.add(one);
+        value = value.add(one);
         //egit = true;
 
     }
