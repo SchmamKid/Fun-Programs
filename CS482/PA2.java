@@ -36,7 +36,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     byte [] cipherText = new byte[cipherTextString.length() / 2];
     for(int i = 0; i < cipherText.length; i++){
-        cipherText[i] = (byte) Byte.parseByte(cipherTextString.substring(i*2, i *2 + 2));
+        cipherText[i] = (byte) Byte.parseByte(cipherTextString.substring(i*2, i *2 + 2), 16);
 
     }
     //byte[] cipherText = cipherTextString.getBytes();
