@@ -73,8 +73,8 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
             if(i > 1){
                 System.out.println("Succes!!");
-                printWriter.println("Key: " + inKey);
-                printWriter.println(new String (cleartextBlocks));
+                printWriter.append("Key: " + inKey);
+                printWriter.append(new String (cleartextBlocks));
             }
 
             for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
@@ -110,7 +110,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     double elapsed = tdelta / 100.0;
 
-    printWriter.println(elapsed);
+    printWriter.append("\n" + elapsed);
     printWriter.close();
 
 }
