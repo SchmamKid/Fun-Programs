@@ -3,6 +3,7 @@ import java.security.InvalidKeyException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.math.BigInteger;
 
@@ -17,7 +18,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     File savedText = new File("savedText.txt");
 
-    PrintWriter printWriter = new PrintWriter(savedText);
+    PrintWriter printWriter = new PrintWriter(new FileOutputStream(savedText, true));
 
     byte[] inKey = new byte[16];
 
