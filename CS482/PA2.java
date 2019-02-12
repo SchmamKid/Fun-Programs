@@ -31,6 +31,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
         (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x03};
 
+    byte [] finalKey = new byte[16];
 
     String cipherTextString = "8F9C9C3EC872D10E8C955CFE5D0672716A9A7C285876B94A6BD3133193E67DB7C2D0278FAC5499898389EC1A5F8C9B247530D564DECEC99B829D7CC45EAB3EFFEE9B2639AF76033641E86E67A5F80564";
 
@@ -84,7 +85,8 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
                 System.out.println("Succes!!");
                 printWriter.append("\nKey:");
                 for(int x = 0; x < inKey.length; x++){
-                  printWriter.append("" +inKey[x]);
+                  finalKey[x] = inKey[x];
+                  printWriter.append(String.format("%02x", inKey[x]));
                 }
 
                 //printWriter.append("\nKey: " + Rijndael_Algorithm.toString2(inKey));
@@ -123,7 +125,8 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
               System.out.println("Succes!!");
               printWriter.append("\nKey:");
               for(int x = 0; x < inKey.length; x++){
-                printWriter.append("" +inKey[x]);
+                finalKey[x] = inKey[x];
+                printWriter.append(String.format("%02x", inKey[x]));
               }
 
               //printWriter.append("\nKey: " + Rijndael_Algorithm.toString2(inKey));
@@ -168,6 +171,35 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
     printWriter.append("\n" + elapsed);
     printWriter.close();
+
+
+     String messageText = "";
+
+     byte[] inText = messageText.getBytes();
+     int numOfBlocks = inText.length / 16;
+     Object roundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.ENCRYPT_MODE, finalKey);
+     byte[] cbcIV = {(byte) 0x67, (byte) 0xc7, (byte) 0x20, (byte) 0xb7, (byte) 0x2a, (byte) 0x53,
+         (byte) 0xb4, (byte) 0xbf, (byte) 0x97, (byte) 0x33, (byte) 0x73, (byte) 0x2f,
+         (byte) 0xad, (byte) 0x99, (byte) 0x71, (byte) 0x71};
+
+     cipherText = new byte[cbcIV.length + inText.length];
+     byte[] feedback = Arrays.copyOf (cbcIV, cbcIV.length);
+     for (int i = 0; i < 16; i++) cipherText[i] = cbcIV[i];
+     byte[] currentBlock = new byte[16];
+
+     for (int i = 0 ; i < numOfBlocks; i++) {
+       for (int j=0; j < 16; j++) currentBlock[j] = (byte) (inText[i*16 + j] ^ feedback[j]); // CBC feedback
+
+       byte[] thisCipherBlock = Rijndael_Algorithm.blockEncrypt2 (currentBlock, 0, roundKeys);
+
+       feedback = Arrays.copyOf (thisCipherBlock, thisCipherBlock.length);
+
+       for (int j=0; j < 16; j++) cipherText[(i+1)*16 + j] = thisCipherBlock[j];
+     }
+
+     System.out.println ("Ciphertext (including IV) is " + AESExample.convertToString (cipherText));
+
+
 
 }
 
