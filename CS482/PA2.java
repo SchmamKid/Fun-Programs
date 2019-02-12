@@ -82,7 +82,12 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
         for (int i=0; i < numOfCiphertextBlocks; i++) {
             if(i > 1){
                 System.out.println("Succes!!");
-                printWriter.append("\nKey: " + new String(inKey));
+                printWriter.append("\nKey:");
+                for(int x = 0; x < inKey.length; x++){
+                  printWriter.append("" +inKey[x]);
+                }
+
+                //printWriter.append("\nKey: " + Rijndael_Algorithm.toString2(inKey));
                 printWriter.append("\n" + new String (cleartextBlocks));
             }
 
@@ -115,9 +120,14 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
 
         for (int i=0; i < numOfCiphertextBlocks; i++) {
             if(i > 1){
-                System.out.println("Succes!!");
-                printWriter.append("\nKey: " + inKey);
-                printWriter.append(new String (cleartextBlocks));
+              System.out.println("Succes!!");
+              printWriter.append("\nKey:");
+              for(int x = 0; x < inKey.length; x++){
+                printWriter.append("" +inKey[x]);
+              }
+
+              //printWriter.append("\nKey: " + Rijndael_Algorithm.toString2(inKey));
+              printWriter.append("\n" + new String (cleartextBlocks));
             }
 
             for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
@@ -160,4 +170,7 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
     printWriter.close();
 
 }
+
+
+
 }
