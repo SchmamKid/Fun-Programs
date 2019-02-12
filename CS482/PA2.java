@@ -69,12 +69,14 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
             //inKey[x] = (byte) inKey[x];
         }
 
+        inKey[4] = (byte) 0x60;
+
         Object decryptRoundKeys = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
 
         for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
             if(i > 1){
                 System.out.println("Succes!!");
-                printWriter.append("Key: " + inKey);
+                printWriter.append("\nKey: " + inKey);
                 printWriter.append(new String (cleartextBlocks));
             }
 
@@ -98,7 +100,44 @@ public static void main(String [] args) throws InvalidKeyException, FileNotFound
             }
 
 
+
+
         }
+
+        inKey[4] = (byte) 0xe0;
+        decryptRoundKeys  = Rijndael_Algorithm.makeKey (Rijndael_Algorithm.DECRYPT_MODE, inKey);
+
+        for (int i=0; i < numOfCiphertextBlocks - 1; i++) {
+            if(i > 1){
+                System.out.println("Succes!!");
+                printWriter.append("\nKey: " + inKey);
+                printWriter.append(new String (cleartextBlocks));
+            }
+
+            for (int j=0; j < 16; j++) currentDecryptionBlock [j] = cipherText[(i+1)*16 + j]; // Note that the first block is the IV
+
+            byte[] thisDecryptedBlock = Rijndael_Algorithm.blockDecrypt2 (currentDecryptionBlock, 0, decryptRoundKeys);
+
+            for (int j=0; j < 16; j++){
+                //System.out.println(i*16 + j);
+
+                cleartextBlocks[i*16+j] =  (byte) (thisDecryptedBlock[j] ^ cipherText[i*16 + j]);
+                if((cleartextBlocks[i*16+j] & 0xff) < lowerBound || (cleartextBlocks[i*16+j] & 0xff) > upperBound){
+                    i = numOfCiphertextBlocks + 1;
+                    //value += 1;
+                    j = 17;
+                }
+                else {
+                    //System.out.print(cleartextBlocks[i*16+j]);
+
+                }
+            }
+
+
+
+
+        }
+
 
 
         value = value.add(one);
