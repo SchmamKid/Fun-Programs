@@ -1,0 +1,59 @@
+0Golden State
+
+1Phoenix
+
+2Minnesota
+
+3New Orleans
+
+4Chicago 
+
+5Cleveland
+
+6San Antonio
+
+7Philly
+
+8Washington
+9Seattle
+
+10Utah
+
+11New Jersey
+
+12Orlando
+
+13Houston
+
+14Charlotte
+
+15Milwaukee
+
+16New York
+
+17Indiana
+
+18Atlanta
+
+19Toronto
+
+20Portland
+
+21Dallas
+
+22Memphis
+
+23LA Lakers
+
+24Boston
+
+25LA Clipper
+
+26Detriot
+
+27Miami
+
+28Sacramento
+
+29Denver
+

@@ -1,0 +1,30 @@
+Atlanta
+Boston
+Charlotte
+Chicago 
+Cleveland
+Dallas
+Denver
+Detriot
+Golden State
+Houston
+Indiana
+LA Clipper
+LA Lakers
+Memphis
+Miami
+Milwaukee
+Minnesota
+New Jersey
+New Orleans
+New York
+Orlando
+Philly
+Phoenix
+Portland
+Sacramento
+San Antonio
+Seattle
+Toronto
+Utah
+Washington
