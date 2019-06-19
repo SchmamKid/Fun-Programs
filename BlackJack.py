@@ -21,41 +21,75 @@ def cards(num):
     elif 37 <= num <= 52:
         return 10
 
+def opening_draw(player):
+    i = 0
+    while i < 2:
+        num = randint(1,52)
+        card = cards(num)
+        if card == "A":
+            value = 11
+            player.append(value)
+        else:
+            player.append(card)
+        i += 1
+    return checkaces(player)
+
+def checkaces(player):
+    i = 0
+    while i < len(player):
+        if player[i] == 11 and sum(player) > 21:
+            player[i] = 1
+        i += 1
+    return player
+def draw(player):
+    num = randint(1,52)
+    card = cards(num)
+    if card == "A":
+        value = 11
+        player.append(value)
+    else:
+        player.append(card)
+    return checkaces(player)
+
+def checkwin(user,dealer):
+    if sum(user) > 21:
+        print("BUST. you lost :(")
+        print("Dealer has ", dealer)
+        print("You have ", user)
+        return False
+    elif sum(dealer) > 21:
+        print("YOU WON")
+        print("Dealer has ", dealer)
+        print("You have ", user)
+        return True
+    elif sum(user) >= sum(dealer):
+        print("YOU WON")
+        print("Dealer has ", dealer)
+        print("You have ", user)
+        return True
+    elif sum(dealer) > sum(user):
+        print("You lost :(")
+        print("Dealer has ", dealer)
+        print("You have ", user)
+        return False
+
 def game():
     money = 20
     loop = True
     print("WELCOME TO BLACKJACK")
     while loop:
-        dealer = 0
-        user = 0
+        dealer = []
+        user = []
         print("You currently have ", money, " dollars in your account")
         wager = input("How much would you like to wager")
         wager = int(wager)
         if wager <= money:
             i = 0
-            while i < 4:
-                num = randint(1,52)
-                card = cards(num)
-                if i < 2:
-                    if card == "A":
-                        if dealer + 11 > 21:
-                            dealer += 1
-                        else:
-                            dealer += 11
-                    else:
-                        dealer += card
-                else:
-                    if card == "A":
-                        if user + 11 > 21:
-                            user += 1
-                        else:
-                            user += 11
-                    else:
-                        user += card
-                i += 1
+            dealer = opening_draw(dealer)
+            user = opening_draw(user)
             print("Dealer has ", dealer)
             print("You have ", user)
-            if user == 21 and dealer != 21:
+            if sum(user) == 21 and sum(dealer) != 21:
                 print("YOU WON")
                 money += wager
                 play = input("Would you like to play again?")
@@ -63,7 +97,7 @@ def game():
                     loop = False
                     print("Thank you for playing you earned ", money, " dollars")
                     exit()
-            elif user != 21 and dealer == 21:
+            elif sum(user) != 21 and sum(dealer) == 21:
                 print("You lost :(")
                 money -= wager
                 if money <= 0:
@@ -76,31 +110,23 @@ def game():
                         print("Thank you for playing you earned ", money, " dollars")
                         exit()
             else:
-                hit = input("Would you like to draw another card?")
-                if hit == "yes":
-                    num = randint(1,52)
-                    card = cards(num)
-                    if card == "A":
-                        if user + 11 > 21:
-                            user += 1
-                        else:
-                            user += 11
+                loop2 = True
+                while loop2:
+                    hit = input("Would you like to draw another card?")
+                    if hit == "yes":
+                        draw(user)
+                        if sum(user) < 21 and sum(user) > sum(dealer):
+                            draw(dealer)
+                        print("Dealer has ", dealer)
+                        print("You have ", user)
+                        if sum(user) > sum(dealer) or sum(user) == 21:
+                            loop2 = False
                     else:
-                        user += card
-                if user > 21:
-                    print("BUST. you lost :(")
-                    print("Dealer has ", dealer)
-                    print("You have ", user)
-                    money -= wager
-                elif user >= dealer:
-                    print("YOU WON")
-                    print("Dealer has ", dealer)
-                    print("You have ", user)
+                        loop2 = False
+                win = checkwin(user,dealer)
+                if win == True:
                     money += wager
-                elif dealer > user:
-                    print("You lost :(")
-                    print("Dealer has ", dealer)
-                    print("You have ", user)
+                else:
                     money -= wager
                 if money <= 0:
                     print("You ran out of money. You can no longer play")
